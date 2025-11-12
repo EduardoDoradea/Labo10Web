@@ -7,8 +7,5 @@ const router = Router();
 
 router.get("/mostrarClientes", verifyToken, controlador.getCustomers);
 router.get("/buscar", verifyToken, controlador.getCustomerById);
-//Ruta: GET /api/customers/search?code=XYZ
 
 export default router;
-
-

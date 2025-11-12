@@ -13,8 +13,8 @@ const PORT = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/api/autenticacion', rutaAut);
-app.use('/api/usuarios', rutaUser);
+app.use('/api/auth', rutaAut);
+app.use('/api/users', rutaUser);
 app.use('/api/customers', rutaCustomer);
 app.use('/api/sales', rutaSale);
 

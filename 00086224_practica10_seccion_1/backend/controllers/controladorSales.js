@@ -8,7 +8,7 @@ const getSales = (req, res) => {
             res.status(500).json({ error: "Error interno del servidor" });
             return;
         }
-        response.status(200).json(results.rows);
+        res.status(200).json(results.rows);
     });
 };
 
@@ -46,7 +46,7 @@ const getSalesCustomer = (req, res) => {
             res.status(500).json({ error: "Error interno del servidor" });
             return;
         }
-        response.status(200).json(results.rows);
+        res.status(200).json(results.rows);
     });
 };
 
@@ -60,9 +60,8 @@ const getReport = (req, res) => {
             res.status(500).json({ error: "Error interno del servidor" });
             return;
         }
-        response.status(200).json(results.rows);
+        res.status(200).json(results.rows);
     });
 };
-
 
 export default { getSales, postSales, getSalesCustomer, getReport }
