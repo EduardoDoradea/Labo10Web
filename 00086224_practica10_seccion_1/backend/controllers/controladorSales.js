@@ -34,8 +34,8 @@ const postSales = (req, res) => {
                 }
                 res.status(200).json("Se ha creado la venta con exito. " + results.rows);
             });
-    })
-}
+    });
+};
 
 const getSalesCustomer = (req, res) => {
     pool.query(`SELECT s.id, s.amount, s.created_at, c.name

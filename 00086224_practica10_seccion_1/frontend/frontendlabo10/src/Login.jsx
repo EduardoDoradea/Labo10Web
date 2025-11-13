@@ -6,18 +6,16 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await API.post("/signin", { email, password });
+            const response = await API.post("/api/auth/signin", { email, password });
             localStorage.setItem("token", response.data.token);
-            alert("Login successful!");
+            alert("Inicio de sesion con exito!");
         } catch (err) {
-            setError(err.response?.data?.message || "Something went wrong!");
+            setError(err.response?.data?.message || "Ocurrio un error");
         }
     };
-
     return (
         <form onSubmit={handleLogin}>
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
