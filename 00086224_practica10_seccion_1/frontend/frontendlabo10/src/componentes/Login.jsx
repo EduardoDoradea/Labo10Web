@@ -1,6 +1,6 @@
 // src/Login.js
 import { useState } from "react";
-import API from "./utils/api.js";
+import API from "../utils/api.js";
 
 const Login = () => {
     const [email, setEmail] = useState("");

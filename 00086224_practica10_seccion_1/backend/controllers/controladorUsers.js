@@ -39,7 +39,7 @@ const updateUser = async (request, response) => {
     const id = parseInt(request.params.id);
 
     if (password) {
-        const passwordHash = await hashPassword.hashPassword(password);
+        const passwordHash = await hashPassword.hash(password);
         //const hashedPassword = await bcrypt.hash(String(password), 10);
 
         pool.query("UPDATE users SET name = $2, email = $3, password = $4 WHERE id = $1", [id, name, email, passwordHash], (error, results) => {

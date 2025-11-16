@@ -23,7 +23,7 @@ const signin = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        const token =  jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+        const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
 
         res.status(200).json({ token });
 
@@ -36,22 +36,26 @@ const signin = async (req, res) => {
 const signup = async (req, res) => {
 
     const { name, email, password } = req.body;
+    try {
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'Faltan campos: nombre, email o contrasenia' });
+        }
+        const passwordHash = await hashPassword.hash(password);
+        //const hashedPassword = await bcrypt.hash(String(password), 10);
 
-    if (!name || !email || !password) {
-        return res.status(400).json({ message: 'Faltan campos: nombre, email o contrasenia' });
+        pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
+            [name, email, passwordHash], (error, results) => {
+                if (error) {
+                    console.error("Error al obtener usuarios:", error);
+                    res.status(500).json({ error: "Error interno del servidor" });
+                    return;
+                }
+                res.status(200).json("Se ha creado el usuario con exito. " + results.rows);
+            });
+    }catch(error){
+        console.error("Error en la creacion de un usuario. " + error)
+        res.status(500).json({ message: "Internal server error" });
     }
-    const passwordHash = await hashPassword.hashPassword(password);
-    //const hashedPassword = await bcrypt.hash(String(password), 10);
-
-    pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
-        [name, email, passwordHash], (error, results) => {
-            if (error) {
-                console.error("Error al obtener usuarios:", error);
-                res.status(500).json({ error: "Error interno del servidor" });
-                return;
-            }
-            res.status(200).json("Se ha creado el usuario con exito. " + results.rows);
-        });
 }
 
 export default { signin, signup };
